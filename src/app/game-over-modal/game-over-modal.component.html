@@ -1,0 +1,17 @@
+<h1 mat-dialog-title class="game-over-title">{{ data.title }}</h1>
+<div mat-dialog-content>
+  <div class="game-over-msg">{{ data.msg }}</div>
+  <img
+    [src]="data.imgSrc"
+    (load)="onImgLoad()"
+    (error)="onImgError()"
+    [ngClass]="{ 'img-loading': loading }"
+    width="680"
+    height="480"
+    alt="Game over"
+  />
+  <app-spinner *ngIf="loading"></app-spinner>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Nowa gra</button>
+</div>

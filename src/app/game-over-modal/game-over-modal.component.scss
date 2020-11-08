@@ -1,0 +1,18 @@
+:host {
+  color: #483141;
+  .game-over-title {
+    text-align: center;
+    font-size: 2.7em;
+  }
+  .game-over-msg {
+    padding: 1em 0;
+    font-size: 1.3em;
+  }
+  img {
+    width: 100%;
+    height: auto;
+  }
+  .img-loading {
+    visibility: hidden;
+  }
+}

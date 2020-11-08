@@ -1,0 +1,15 @@
+<div fxLayout="row wrap" class="alphabet-container">
+  <button
+    *ngFor="let letter of letters"
+    mat-stroked-button
+    (click)="onSelect(letter)"
+    [disabled]="letter.status !== LetterStatusEnum.NEUTRAL"
+    [ngClass]="{
+      'letter-correct': letter.status === LetterStatusEnum.CORRECT,
+      'letter-wrong': letter.status === LetterStatusEnum.WRONG
+    }"
+    color="primary"
+  >
+    {{ letter.value }}
+  </button>
+</div>

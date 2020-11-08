@@ -1,0 +1,9 @@
+.game-status-container {
+  padding: 1em;
+  font-size: 1.6em;
+  line-height: 1.5em;
+  color: #708895;
+  @media screen and(max-width: 400px) {
+    padding: 0.5em 1em;
+  }
+}

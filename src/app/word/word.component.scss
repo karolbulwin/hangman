@@ -1,0 +1,22 @@
+.word-container {
+  padding: 1em;
+  font-size: 3em;
+  font-family: 'Inconsolata';
+  padding-top: 2em;
+  line-height: 1.5em;
+  color: #483141;
+
+  @media screen and(max-width: 960px) {
+    padding: 0;
+  }
+  @media screen and(max-width: 400px) {
+    font-size: 2.8em;
+  }
+  .word {
+    padding: 0.3em 1em;
+    border: 1px solid #708895;
+    border-radius: 50px;
+    text-align: center;
+    background-color: #e8e8e8;
+  }
+}
