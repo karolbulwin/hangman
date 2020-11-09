@@ -32,7 +32,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private _stage: number = 1;
   private _maxStage: number = 5;
-  private chances: number = 6;
+  chances: number = 6;
 
   private wordCatched: string;
   private wordsCatched: IWord[];
@@ -85,7 +85,6 @@ export class AppComponent implements OnInit, OnDestroy {
           if (answersDataRequest) {
             this.wordsCatched = JSON.parse(JSON.stringify(answersDataRequest.words));
             this.setGameWords();
-            console.log('HINT: ', this.words);
             this.loading = false;
           }
         },
@@ -101,7 +100,6 @@ export class AppComponent implements OnInit, OnDestroy {
       );
     } else {
       this.setGameWords();
-      console.log('HINT: ', this.words);
     }
   }
 
