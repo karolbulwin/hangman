@@ -81,10 +81,11 @@ export class AppComponent implements OnInit, OnDestroy {
     if (!this.words) {
       this.loading = true;
       this._answersService.getAll().subscribe(
-        (answersDataRequest: IAnswersDataRequest) => {
+        async (answersDataRequest: IAnswersDataRequest) => {
           if (answersDataRequest) {
             this.wordsCatched = JSON.parse(JSON.stringify(answersDataRequest.words));
             this.setGameWords();
+            await this.preCatchImgs();
             this.loading = false;
           }
         },
@@ -189,6 +190,26 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private updateImgSrc(): void {
     this.imgSrc = `${environment.API_URL}assets/img/hangman_${this.imgNr}k.png`;
+  }
+
+  private preCatchImgs(): Promise<any> {
+    const promises = [];
+
+    for (let i = 2; i < 8; i++) {
+      promises.push(
+        new Promise((resolve, reject) => {
+          const img = new Image();
+          img.src = `${environment.API_URL}assets/img/hangman_${i}k.png`;
+          img.onerror = () => {
+            reject();
+          };
+          img.onload = () => {
+            resolve();
+          };
+        })
+      );
+    }
+    return Promise.all(promises);
   }
 
   private gameOver(modalData: IGameOverModalData): void {
