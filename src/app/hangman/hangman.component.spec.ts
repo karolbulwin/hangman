@@ -33,7 +33,7 @@ describe('HangmanComponent', () => {
     component.imgSrc = `${environment.API_URL}assets/img/hangman_1k.png`;
     fixture.detectChanges();
 
-    let deImg = fixture.debugElement.query(By.css('img'));
+    const deImg = fixture.debugElement.query(By.css('img'));
     expect(deImg.attributes['src']).toContain(`${environment.API_URL}assets/img/hangman_1k.png`);
   });
 });

@@ -38,7 +38,7 @@ describe('GameStatusComponent', () => {
     component.maxStage = 5;
     fixture.detectChanges();
 
-    let deDiv = fixture.debugElement.query(By.css('.game-status-container div'));
+    const deDiv = fixture.debugElement.query(By.css('.game-status-container div'));
     expect(deDiv.nativeElement.textContent).toContain('/5');
   });
 
@@ -46,7 +46,7 @@ describe('GameStatusComponent', () => {
     component.stage = 3;
     fixture.detectChanges();
 
-    let deDiv = fixture.debugElement.query(By.css('.game-status-container div'));
+    const deDiv = fixture.debugElement.query(By.css('.game-status-container div'));
     expect(deDiv.nativeElement.textContent).toContain('3/');
   });
 });

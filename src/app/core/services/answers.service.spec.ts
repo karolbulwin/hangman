@@ -91,7 +91,7 @@ describe('AnswersService', () => {
     it('should return 5 random words', () => {
       let sorted: boolean;
 
-      let fiveWords = service.getRandomFiveWords(words);
+      const fiveWords = service.getRandomFiveWords(words);
       for (let i = 0; i < fiveWords.length - 1; i++) {
         if (fiveWords[i].id + 1 !== fiveWords[i + 1].id) {
           sorted = true;

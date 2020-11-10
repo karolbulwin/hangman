@@ -1,34 +1,31 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
   ComponentFixture,
   discardPeriodicTasks,
   fakeAsync,
-  flush,
-  flushMicrotasks,
   TestBed,
   tick
 } from '@angular/core/testing';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { BrowserModule, By } from '@angular/platform-browser';
-import {
-  BrowserAnimationsModule,
-  NoopAnimationsModule
-} from '@angular/platform-browser/animations';
-import { EmptyError, of } from 'rxjs';
-import { Observable } from 'rxjs/internal/Observable';
-import { environment } from 'src/environments/environment';
+import { By } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Observable, of, throwError } from 'rxjs';
+
+import { AlphabetService } from './core/services/alphabet.service';
+import { AnswersService } from './core/services/answers.service';
+import { GameOverModalComponent } from './game-over-modal/game-over-modal.component';
+import { GameStatusComponent } from './game-status/game-status.component';
+import { WordComponent } from './word/word.component';
 import { AppComponent } from './app.component';
+
+import { environment } from 'src/environments/environment';
 import { LetterStatusEnum } from './core/enum/letter-status.enum';
 import { IAnswersDataRequest } from './core/models/answers-data-request.model';
 import { ILetter } from './core/models/letter.model';
 import { IWord } from './core/models/word.model';
-import { AlphabetService } from './core/services/alphabet.service';
-import { AnswersService } from './core/services/answers.service';
-import { GameStatusComponent } from './game-status/game-status.component';
-import { WordComponent } from './word/word.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -39,9 +36,7 @@ describe('AppComponent', () => {
 
   let mockAnswersService;
   let mockAlphabetService;
-  let mockMatDialogModule;
-  let mockMatSnackBarModule;
-
+  let mockSnackbar;
   @Component({
     selector: 'app-hangman',
     template: '<div></div>'
@@ -68,8 +63,7 @@ describe('AppComponent', () => {
   beforeEach(async () => {
     mockAnswersService = jasmine.createSpyObj(['getAll', 'getRandomFiveWords']);
     mockAlphabetService = jasmine.createSpyObj(['getAllLetters', 'changeLetterStatus']);
-    mockMatDialogModule = jasmine.createSpyObj(['getAllLetters', 'changeLetterStatus']);
-    mockMatSnackBarModule = jasmine.createSpyObj(['getAllLetters', 'changeLetterStatus']);
+    mockSnackbar = jasmine.createSpyObj(['open']);
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -78,12 +72,14 @@ describe('AppComponent', () => {
         WordComponent,
         FakeHangmanComponent,
         FakeAlphabetComponent,
-        FakeSpinnerComponent
+        FakeSpinnerComponent,
+        GameOverModalComponent
       ],
       imports: [NoopAnimationsModule, MatDialogModule, MatSnackBarModule],
       providers: [
         { provide: AnswersService, useValue: mockAnswersService },
-        { provide: AlphabetService, useValue: mockAlphabetService }
+        { provide: AlphabetService, useValue: mockAlphabetService },
+        { provide: MatSnackBar, useValue: mockSnackbar }
       ]
     }).compileComponents();
   });
@@ -190,6 +186,32 @@ describe('AppComponent', () => {
     expect(component.imgSrc).toBe(`${environment.API_URL}assets/img/hangman_1k.png`);
   });
 
+  it('should call ngOnInit then start newGame and throw error', () => {
+    mockAnswersService.getAll.and.returnValue(
+      throwError(
+        new HttpErrorResponse({
+          error: new Error(),
+          status: 404,
+          statusText: 'Not Found',
+          url: `${environment.API_URL}assets/data/answers.json`
+        })
+      )
+    );
+    fixture.detectChanges();
+
+    expect(mockSnackbar.open).toHaveBeenCalledWith(
+      'Http failure response for ' +
+        `${environment.API_URL}assets/data/answers.json` +
+        ': ' +
+        '404 Not Found',
+      null,
+      {
+        duration: 4000,
+        horizontalPosition: 'right'
+      }
+    );
+  });
+
   describe('GameStatusComponet', () => {
     it('should render with correct initial status "Etap: 1/5"', () => {
       fixture.detectChanges();
@@ -247,9 +269,9 @@ describe('AppComponent', () => {
   });
 
   it('should change stage from 2 to 1 then start new game', () => {
-    let dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of({}), close: null });
+    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of({}), close: null });
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj);
     dialogRefSpyObj.componentInstance = { body: '' };
-    spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj);
     fixture.detectChanges();
 
     component.onLetterSelected(letters[1]);
@@ -260,13 +282,24 @@ describe('AppComponent', () => {
     component.onLetterSelected(letters[6]);
     fixture.detectChanges();
 
+    expect(dialogSpy).toHaveBeenCalledWith(GameOverModalComponent, {
+      width: '728px',
+      disableClose: true,
+      autoFocus: false,
+      data: {
+        title: 'PRZEGRANA',
+        msg: `Chesz spróbować jeszcze raz?`,
+        imgSrc: `${environment.API_URL}assets/gif/lose.gif`
+      }
+    });
+    expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled();
     expect(component.stage).toEqual(1);
   });
 
   it('should change stage from 1 to 5 then won game and start new one', () => {
-    let dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of({}), close: null });
+    const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed: of({}), close: null });
+    const dialogSpy = spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj);
     dialogRefSpyObj.componentInstance = { body: '' };
-    spyOn(TestBed.inject(MatDialog), 'open').and.returnValue(dialogRefSpyObj);
     fixture.detectChanges();
 
     component.gameTime = 158;
@@ -282,6 +315,17 @@ describe('AppComponent', () => {
     component.onLetterSelected(letters[3]);
     fixture.detectChanges();
 
+    expect(dialogSpy).toHaveBeenCalledWith(GameOverModalComponent, {
+      width: '728px',
+      disableClose: true,
+      autoFocus: false,
+      data: {
+        title: 'WYGRANA!',
+        msg: `Gratulacje! Twój czas: 2m:39s`,
+        imgSrc: `${environment.API_URL}assets/gif/win.gif`
+      }
+    });
+    expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled();
     expect(component.stage).toEqual(1);
   });
 

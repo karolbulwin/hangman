@@ -19,7 +19,7 @@ describe('AlphabetService', () => {
 
   describe('getRandomFiveWords method', () => {
     it('should return 35 words', () => {
-      let letters = service.getAllLetters();
+      const letters = service.getAllLetters();
 
       expect(letters.length).toEqual(35);
     });
@@ -27,21 +27,21 @@ describe('AlphabetService', () => {
 
   describe('changeLetterStatus method', () => {
     it('should change letter status to WRONG', () => {
-      let letters = service.getAllLetters();
-      let selectedLetter = letters[4];
-      let word = 'Wykrzyknik';
+      const letters = service.getAllLetters();
+      const selectedLetter = letters[4];
+      const word = 'Wykrzyknik';
 
-      let newLetters = service.changeLetterStatus(letters, selectedLetter, word);
+      const newLetters = service.changeLetterStatus(letters, selectedLetter, word);
 
       expect(newLetters[4].status).toEqual(LetterStatusEnum.WRONG);
     });
 
     it('should change letter status to CORRECT', () => {
-      let letters = service.getAllLetters();
-      let selectedLetter = letters[11];
-      let word = 'Wykrzyknik';
+      const letters = service.getAllLetters();
+      const selectedLetter = letters[11];
+      const word = 'Wykrzyknik';
 
-      let newLetters = service.changeLetterStatus(letters, selectedLetter, word);
+      const newLetters = service.changeLetterStatus(letters, selectedLetter, word);
 
       expect(newLetters[11].status).toEqual(LetterStatusEnum.CORRECT);
     });
