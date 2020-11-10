@@ -186,7 +186,7 @@ describe('AppComponent', () => {
     expect(component.imgSrc).toBe(`${environment.API_URL}assets/img/hangman_1k.png`);
   });
 
-  it('should call ngOnInit then start newGame and throw error', () => {
+  it('should call ngOnInit then start newGame and throw error then display it in snackbar', () => {
     mockAnswersService.getAll.and.returnValue(
       throwError(
         new HttpErrorResponse({
@@ -340,14 +340,12 @@ describe('AppComponent', () => {
     }));
   });
 
-  describe('timerSubscrition', () => {
-    it('should unsubscribe when call ngOnDestroy method ', () => {
-      spyOn(component, 'ngOnDestroy');
-      fixture.detectChanges();
+  it('should call ngOnDestroy method ', () => {
+    spyOn(component, 'ngOnDestroy');
+    fixture.detectChanges();
 
-      component.ngOnDestroy();
+    component.ngOnDestroy();
 
-      expect(component.ngOnDestroy).toHaveBeenCalled();
-    });
+    expect(component.ngOnDestroy).toHaveBeenCalled();
   });
 });
