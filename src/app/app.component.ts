@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Subscription, timer } from 'rxjs';
+import { forkJoin, Observable, Subscription, timer } from 'rxjs';
 
 import { AlphabetService } from './core/services/alphabet.service';
 import { AnswersService } from './core/services/answers.service';
@@ -39,6 +39,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private lettersCatched: ILetter[];
   private imgNr: number = 1;
   private timerSubscrition: Subscription;
+  private preCatchImgsSub: Subscription;
 
   get maxStage(): number {
     return this._maxStage;
@@ -58,6 +59,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.preCatchImgs();
     this.newGame();
   }
 
@@ -77,6 +79,37 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
+  private preCatchImgs() {
+    this.loading = true;
+    const arrObs = [];
+    for (let i = 1; i < 8; i++) {
+      const obs = new Observable((subscriber) => {
+        const img = new Image();
+        img.src = `${environment.API_URL}assets/img/hangman_${i}k.png`;
+        img.onerror = () => {
+          subscriber.next();
+          subscriber.complete();
+        };
+        img.onload = () => {
+          subscriber.next();
+          subscriber.complete();
+        };
+      });
+      arrObs.push(obs);
+    }
+
+    const observalbe = forkJoin(arrObs);
+    this.preCatchImgsSub = observalbe.subscribe(
+      () => {},
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    );
+  }
+
   private getAnswers(): void {
     if (!this.words) {
       this.loading = true;
@@ -85,7 +118,6 @@ export class AppComponent implements OnInit, OnDestroy {
           if (answersDataRequest) {
             this.wordsCatched = JSON.parse(JSON.stringify(answersDataRequest.words));
             this.setGameWords();
-            this.loading = false;
           }
         },
         (error) => {
@@ -225,6 +257,9 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.timerSubscrition) {
       this.timerSubscrition.unsubscribe();
+    }
+    if (this.preCatchImgsSub) {
+      this.preCatchImgsSub.unsubscribe();
     }
   }
 }
