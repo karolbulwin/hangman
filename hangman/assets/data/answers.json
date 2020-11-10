@@ -1,0 +1,125 @@
+{
+  "words": [
+    {
+      "id": 1,
+      "value": "Ręka"
+    },
+    {
+      "id": 2,
+      "value": "Noga"
+    },
+    {
+      "id": 3,
+      "value": "Głowa"
+    },
+    {
+      "id": 4,
+      "value": "Plecy"
+    },
+    {
+      "id": 5,
+      "value": "Palec"
+    },
+    {
+      "id": 6,
+      "value": "Brzuch"
+    },
+    {
+      "id": 7,
+      "value": "Dłoń"
+    },
+    {
+      "id": 8,
+      "value": "Ananas"
+    },
+    {
+      "id": 9,
+      "value": "Ucho"
+    },
+    {
+      "id": 10,
+      "value": "Oko"
+    },
+    {
+      "id": 11,
+      "value": "Usta"
+    },
+    {
+      "id": 12,
+      "value": "Stopa"
+    },
+    {
+      "id": 13,
+      "value": "Pięta"
+    },
+    {
+      "id": 14,
+      "value": "Kolor"
+    },
+    {
+      "id": 15,
+      "value": "Biały"
+    },
+    {
+      "id": 16,
+      "value": "Dom"
+    },
+    {
+      "id": 17,
+      "value": "Kominek"
+    },
+
+    {
+      "id": 18,
+      "value": "Okno"
+    },
+    {
+      "id": 19,
+      "value": "Suweren"
+    },
+    {
+      "id": 20,
+      "value": "Drzwi"
+    },
+    {
+      "id": 21,
+      "value": "Zlew"
+    },
+    {
+      "id": 22,
+      "value": "Hamak"
+    },
+    {
+      "id": 23,
+      "value": "Oddychać"
+    },
+    {
+      "id": 24,
+      "value": "Stół"
+    },
+    {
+      "id": 25,
+      "value": "Córka"
+    },
+    {
+      "id": 26,
+      "value": "Smakuje"
+    },
+    {
+      "id": 27,
+      "value": "Odpowiada"
+    },
+    {
+      "id": 28,
+      "value": "Mama"
+    },
+    {
+      "id": 29,
+      "value": "Fotel"
+    },
+    {
+      "id": 30,
+      "value": "Wisielec"
+    }
+  ]
+}
