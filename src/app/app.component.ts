@@ -29,10 +29,10 @@ export class AppComponent implements OnInit, OnDestroy {
   imgSrc: string;
   gameTime: number;
   loading: boolean;
+  chances: number = 6;
 
   private _stage: number = 1;
-  private _maxStage: number = 5;
-  chances: number = 6;
+  private readonly _maxStage: number = 5;
 
   private wordCatched: string;
   private wordsCatched: IWord[];
@@ -52,15 +52,30 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private _answersService: AnswersService,
-    private _alphabetService: AlphabetService,
-    private _dialog: MatDialog,
-    private _snackBar: MatSnackBar
+    private readonly _answersService: AnswersService,
+    private readonly _alphabetService: AlphabetService,
+    private readonly _dialog: MatDialog,
+    private readonly _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
     this.preCatchImgs();
     this.newGame();
+  }
+
+  ngOnDestroy(): void {
+    if (this.timerSubscrition) {
+      this.timerSubscrition.unsubscribe();
+    }
+    if (this.preCatchImgsSub) {
+      this.preCatchImgsSub.unsubscribe();
+    }
+  }
+
+  onLetterSelected(letter: ILetter): void {
+    this.letters = this._alphabetService.changeLetterStatus(this.letters, letter, this.wordCatched);
+    this.word = this.updateWord(letter.value, this.word);
+    this.checkIfPlayerWon();
   }
 
   private newGame(): void {
@@ -159,12 +174,6 @@ export class AppComponent implements OnInit, OnDestroy {
     return word.replace(/./g, '-');
   }
 
-  public onLetterSelected(letter: ILetter) {
-    this.letters = this._alphabetService.changeLetterStatus(this.letters, letter, this.wordCatched);
-    this.word = this.updateWord(letter.value, this.word);
-    this.checkIfPlayerWon();
-  }
-
   private updateWord(letter: string, word: string): string {
     let newWord = word;
     const wordCatched = this.wordCatched.toUpperCase();
@@ -252,14 +261,5 @@ export class AppComponent implements OnInit, OnDestroy {
       time = `${seconds}s`;
     }
     return time;
-  }
-
-  ngOnDestroy(): void {
-    if (this.timerSubscrition) {
-      this.timerSubscrition.unsubscribe();
-    }
-    if (this.preCatchImgsSub) {
-      this.preCatchImgsSub.unsubscribe();
-    }
   }
 }

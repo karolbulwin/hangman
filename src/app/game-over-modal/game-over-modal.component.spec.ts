@@ -66,7 +66,7 @@ describe('GameOverModalComponent', () => {
     mockDialogData.imgSrc = `${environment.API_URL}assets/gif/won.gif`;
     fixture.detectChanges();
 
-    let deImg = fixture.debugElement.query(By.css('img'));
+    const deImg = fixture.debugElement.query(By.css('img'));
     expect(deImg.attributes['src']).toContain(`${environment.API_URL}assets/gif/won.gif`);
   });
 

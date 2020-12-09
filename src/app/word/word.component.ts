@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-word',
@@ -6,10 +6,6 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
   styleUrls: ['./word.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WordComponent implements OnInit {
+export class WordComponent {
   @Input() word: string;
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }

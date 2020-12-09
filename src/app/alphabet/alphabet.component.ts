@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { LetterStatusEnum } from '../core/enum/letter-status.enum';
 import { ILetter } from '../core/models/letter.model';
@@ -16,14 +9,10 @@ import { ILetter } from '../core/models/letter.model';
   styleUrls: ['./alphabet.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AlphabetComponent implements OnInit {
+export class AlphabetComponent {
   LetterStatusEnum = LetterStatusEnum;
   @Input() letters: ILetter[];
   @Output() letterSelected: EventEmitter<ILetter> = new EventEmitter();
-
-  constructor() {}
-
-  ngOnInit(): void {}
 
   onSelect(letter: ILetter): void {
     this.letterSelected.emit(letter);

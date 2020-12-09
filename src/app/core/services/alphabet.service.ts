@@ -43,8 +43,6 @@ export class AlphabetService {
     'Ż'
   ];
 
-  constructor() {}
-
   getAllLetters(): ILetter[] {
     return this.letters.map((letter, index) => new LetterModel({ id: index + 1, value: letter }));
   }

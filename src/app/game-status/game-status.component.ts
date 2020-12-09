@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Input } from '@angular/core';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-game-status',
@@ -7,11 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./game-status.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GameStatusComponent implements OnInit {
+export class GameStatusComponent {
   @Input() stage: number;
   @Input() maxStage: number;
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }

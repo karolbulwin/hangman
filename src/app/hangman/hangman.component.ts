@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-hangman',
@@ -6,10 +6,6 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
   styleUrls: ['./hangman.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HangmanComponent implements OnInit {
+export class HangmanComponent {
   @Input() imgSrc: string;
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }

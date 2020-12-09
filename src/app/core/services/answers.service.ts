@@ -19,7 +19,7 @@ export class AnswersService {
   }
 
   getRandomFiveWords(words: IWord[]): IWord[] {
-    const shuffled = words.sort(() => 0.5 - Math.random());
+    const shuffled = [...words].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, 5);
   }
 }
