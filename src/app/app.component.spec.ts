@@ -11,7 +11,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { Observable, of, throwError } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 import { AlphabetService } from './core/services/alphabet.service';
 import { AnswersService } from './core/services/answers.service';
@@ -20,7 +20,7 @@ import { GameStatusComponent } from './game-status/game-status.component';
 import { WordComponent } from './word/word.component';
 import { AppComponent } from './app.component';
 
-import { environment } from 'src/environments/environment';
+import { environment } from '../environments/environment';
 import { LetterStatusEnum } from './core/enum/letter-status.enum';
 import { IAnswersDataRequest } from './core/models/answers-data-request.model';
 import { ILetter } from './core/models/letter.model';

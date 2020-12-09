@@ -7,7 +7,7 @@ import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { GameOverModalComponent } from './game-over-modal.component';
 
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
 import { IGameOverModalData } from '../core/models/game-over-modal-data.model';
 
 describe('GameOverModalComponent', () => {

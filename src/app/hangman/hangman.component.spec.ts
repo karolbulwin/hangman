@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
 import { HangmanComponent } from './hangman.component';
 
 describe('HangmanComponent', () => {

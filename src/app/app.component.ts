@@ -8,7 +8,7 @@ import { AlphabetService } from './core/services/alphabet.service';
 import { AnswersService } from './core/services/answers.service';
 import { GameOverModalComponent } from './game-over-modal/game-over-modal.component';
 
-import { environment } from 'src/environments/environment';
+import { environment } from '../environments/environment';
 import { LetterStatusEnum } from './core/enum/letter-status.enum';
 import { IAnswersDataRequest } from './core/models/answers-data-request.model';
 import { ILetter } from './core/models/letter.model';

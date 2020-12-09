@@ -3,7 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 import { AnswersService } from './answers.service';
 
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../environments/environment';
 import { IWord } from '../models/word.model';
 import { AnswersDataRequestModel, IAnswersDataRequest } from '../models/answers-data-request.model';
 

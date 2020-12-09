@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../environments/environment';
 import { IAnswersDataRequest, AnswersDataRequestModel } from '../models/answers-data-request.model';
 import { IWord } from '../models/word.model';
 
