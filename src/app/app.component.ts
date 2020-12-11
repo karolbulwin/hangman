@@ -6,6 +6,7 @@ import { forkJoin, Observable, Subscription, timer } from 'rxjs';
 
 import { AlphabetService } from './core/services/alphabet.service';
 import { AnswersService } from './core/services/answers.service';
+import { Utils } from './shared/tools/utils';
 import { GameOverModalComponent } from './game-over-modal/game-over-modal.component';
 
 import { environment } from '../environments/environment';
@@ -115,7 +116,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
     const observalbe = forkJoin(arrObs);
     this.preCatchImgsSub = observalbe.subscribe(
-      () => {},
       () => {
         this.loading = false;
       },
@@ -220,7 +220,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.timerSubscrition.unsubscribe();
         const modalData = {
           title: 'WYGRANA!',
-          msg: `Gratulacje! Twój czas: ${this.getTime()}`,
+          msg: `Gratulacje! Twój czas: ${Utils.getTime(this.gameTime)}`,
           imgSrc: `${environment.API_URL}assets/gif/win.gif`
         };
         this.gameOver(modalData);
@@ -244,22 +244,5 @@ export class AppComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.newGame();
       });
-  }
-
-  private getTime(): string {
-    let minutes = 0;
-    let seconds = 0;
-    let time: string;
-    this.gameTime++;
-
-    minutes = Math.floor(this.gameTime / 60);
-    seconds = Math.floor(this.gameTime % 60);
-
-    if (minutes) {
-      time = `${minutes}m:${seconds}s`;
-    } else {
-      time = `${seconds}s`;
-    }
-    return time;
   }
 }

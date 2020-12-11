@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { IGameOverModalData } from '../core/models/game-over-modal-data.model';
@@ -6,7 +6,8 @@ import { IGameOverModalData } from '../core/models/game-over-modal-data.model';
 @Component({
   selector: 'app-game-over-modal',
   templateUrl: './game-over-modal.component.html',
-  styleUrls: ['./game-over-modal.component.scss']
+  styleUrls: ['./game-over-modal.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GameOverModalComponent implements OnInit {
   loading: boolean;
